@@ -131,6 +131,14 @@ int delete_bst(int val, struct node **root)
     }
 }
 
+#define MAX(a,b) ((a) > (b) ? (a) : (b))
+int height_bst(struct node *root)
+{
+    if (!root)
+        return 0;
+
+    return MAX(height_bst(root->left), height_bst(root->right)) + 1;
+}
 
 int main(void)
 {
@@ -167,5 +175,11 @@ int main(void)
     /* printf("---------------\n"); */
     /* test_merge(); */
     /* printf("-----------------\n"); */
+
+    printf("%d\n", height_bst(root)); // =>4
+    insert_bst(42, &root);
+    printf("%d\n", height_bst(root)); // =>5
+
+    
     return 0;
 }
