@@ -71,6 +71,39 @@ int insert_heap(int val)
     }
 }    
 
+int pop_heap(void)
+{
+    int ret = max_heap[0];
+    int index;
+
+    max_heap[0] = max_heap[--heap_count];
+    max_heap[heap_count] = 0;
+
+    index = 0;
+    while (index < heap_count) {
+        int tmp;
+
+        /* printf("l=%d r=%d\n", max_heap[left_index(index)], */
+        /*        max_heap[right_index(index)]); */
+
+        if (max_heap[left_index(index)] > max_heap[right_index(index)]) {
+            /* printf("swap:%d-%d\n", index, left_index(index)); */
+            tmp = max_heap[left_index(index)];
+            max_heap[left_index(index)] = max_heap[index];
+            max_heap[index] = tmp;
+            index = left_index(index);
+        } else {
+            /* printf("swap:%d-%d\n", index, right_index(index)); */
+            tmp = max_heap[right_index(index)];
+            max_heap[right_index(index)] = max_heap[index];
+            max_heap[index] = tmp;
+            index = right_index(index);
+        }
+    }
+    
+    return ret;
+}
+
 int main(void)
 {
     insert_heap(60);
@@ -86,8 +119,19 @@ int main(void)
     insert_heap(75);
     show_heap();
 
+    printf("pop=%d\n", pop_heap());
+    show_heap();
+    printf("pop=%d\n", pop_heap());
+    show_heap();
+    printf("pop=%d\n", pop_heap());
+    show_heap();
 
 
+    printf("===================\n");
+    printf("pop=%d\n", pop_heap());
+    show_heap();
+    printf("pop=%d\n", pop_heap());
+    show_heap();
     
     return 0;
 }
