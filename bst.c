@@ -146,6 +146,20 @@ int count_bst(struct node *root)
     return 1 + count_bst(root->left) + count_bst(root->right);
 }
 
+int kth_bst(struct node *root, int k)
+{
+    /* printf("data=%d count-left=%d k=%d\n", */
+    /*        root->data, count_bst(root->left), k); */
+    if (k == count_bst(root->left))
+        return root->data;
+    else if (k < count_bst(root->left))
+        kth_bst(root->left, k);
+    else
+        // -1: root
+        // count_bst(left): nodes of left = all are less than it
+        kth_bst(root->right, k - count_bst(root->left) - 1);
+}
+
 int main(void)
 {
     struct node *root = NULL;
@@ -194,12 +208,14 @@ int main(void)
     printf("count=%d\n", count_bst(root));
     show_bst(root);
 
-
-    /* printf("---------------\n"); */
-    /* test_merge(); */
-    /* printf("-----------------\n"); */
-
     printf("count=%d\n", count_bst(root));
 
+    {
+        /* test kth_bst() */
+        int i;
+        for (i = 0; i < count_bst(root); i++)
+            printf("%d-th=%d\n", i, kth_bst(root, i));
+
+    }
     return 0;
 }
