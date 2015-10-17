@@ -4,14 +4,37 @@
 int max_heap[1024];
 int heap_count;
 
+
+int get_level(int count)
+{
+    int i;
+    int level = 0;
+    
+    for (i = count; i > 0; i = (i >> 1))
+        level++;
+
+    return level;
+}
+
 void show_heap(void)
 {
     int i;
-    printf("count=%d\n", heap_count);
-    for (i = 0; i < heap_count; i++) {
-        printf("%d ", max_heap[i]);
+    int level;
+    int count = heap_count;
+
+    if (heap_count == 0) {
+        printf("empty\n");
+        return;
     }
-    printf("\n");
+
+    printf("----\n");
+    for (level = 0; level < get_level(heap_count); level++) {
+        for (i = (1 << level) - 1; i < (1 << (level + 1)) - 1; i++) {
+            printf("%d ", max_heap[i]);
+        }
+        printf("\n");
+    }
+    printf("----\n");
 }
 
 int parent_index(int child_index)
@@ -39,7 +62,7 @@ int insert_heap(int val)
     while (max_heap[parent_index(index)] < val) {
         int tmp = max_heap[parent_index(index)];
 
-        printf("swap(%d %d)\n", max_heap[parent_index(index)], val);
+        /* printf("swap(%d %d)\n", max_heap[parent_index(index)], val); */
         max_heap[parent_index(index)] = val;
         max_heap[index] = tmp;
 
@@ -62,6 +85,9 @@ int main(void)
     show_heap();
     insert_heap(75);
     show_heap();
+
+
+
     
     return 0;
 }
