@@ -140,21 +140,39 @@ int height_bst(struct node *root)
     return MAX(height_bst(root->left), height_bst(root->right)) + 1;
 }
 
+int count_bst(struct node *root)
+{
+    if (!root) return 0;
+    return 1 + count_bst(root->left) + count_bst(root->right);
+}
+
 int main(void)
 {
     struct node *root = NULL;
     
     insert_bst(40, &root);
+    printf("count=%d\n", count_bst(root));
+
     insert_bst(20, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(60, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(10, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(30, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(50, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(70, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(25, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(35, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(65, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(75, &root);
+    printf("count=%d\n", count_bst(root));
     show_bst(root);
 
     printf("%d\n", search_bst(65, root)->data);
@@ -162,13 +180,18 @@ int main(void)
     printf("%p\n", search_bst(22, root));
 
     insert_bst(45, &root);
+    printf("count=%d\n", count_bst(root));
     insert_bst(55, &root);
+    printf("count=%d\n", count_bst(root));
     show_bst(root);
     printf("%d\n", delete_bst(35, &root));
+    printf("count=%d\n", count_bst(root));
     show_bst(root);
     printf("%d\n", delete_bst(30, &root));
+    printf("count=%d\n", count_bst(root));
     show_bst(root);
     printf("%d\n", delete_bst(60, &root));
+    printf("count=%d\n", count_bst(root));
     show_bst(root);
 
 
@@ -176,10 +199,7 @@ int main(void)
     /* test_merge(); */
     /* printf("-----------------\n"); */
 
-    printf("%d\n", height_bst(root)); // =>4
-    insert_bst(42, &root);
-    printf("%d\n", height_bst(root)); // =>5
+    printf("count=%d\n", count_bst(root));
 
-    
     return 0;
 }
